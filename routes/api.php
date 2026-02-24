@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\FormFieldController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,4 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Add your API routes here
+Route::prefix('v1')->name('api.v1.')->group(function () {
+    Route::get('/form-fields', [FormFieldController::class, 'index'])->name('form-fields.index');
+});

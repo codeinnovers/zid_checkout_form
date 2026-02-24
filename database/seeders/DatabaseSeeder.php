@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserRoleEnum;
 use App\Enums\UserStatusEnum;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -17,9 +18,10 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'admin@example.com'],
             [
-                'name' => 'Admin User',
-                'email' => 'admin@example.com',
-                'status' => UserStatusEnum::Active,
+                'name'     => 'Admin User',
+                'email'    => 'admin@example.com',
+                'status'   => UserStatusEnum::Active,
+                'role'     => UserRoleEnum::Admin,
                 'password' => bcrypt('password'),
             ]
         );

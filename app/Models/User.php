@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserRoleEnum;
 use App\Enums\UserStatusEnum;
 use App\Traits\HasDataGrid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'status',
+        'role',
         'password',
     ];
 
@@ -80,9 +82,20 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'status' => UserStatusEnum::class,
+            'password'          => 'hashed',
+            'status'            => UserStatusEnum::class,
+            'role'              => UserRoleEnum::class,
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === UserRoleEnum::Admin;
+    }
+
+    public function isMerchant(): bool
+    {
+        return $this->role === UserRoleEnum::Merchant;
     }
 
     public function merchant(): HasOne
