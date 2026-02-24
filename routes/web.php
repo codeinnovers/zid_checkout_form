@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Users\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Merchant\FormFields\FormFieldController;
 use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+
+    // Merchant Routes
+    Route::prefix('merchant')->name('merchant.')->group(function () {
+        // Form Fields
+        Route::get('/form-fields', [FormFieldController::class, 'index'])->name('form-fields.index');
+        Route::post('/form-fields', [FormFieldController::class, 'store'])->name('form-fields.store');
+        Route::get('/form-fields/list', [FormFieldController::class, 'list'])->name('form-fields.list');
+        Route::patch('/form-fields/{formField}/status', [FormFieldController::class, 'updateStatus'])->name('form-fields.update-status');
+        Route::post('/form-fields/bulk-status', [FormFieldController::class, 'bulkUpdateStatus'])->name('form-fields.bulk-update-status');
+        Route::post('/form-fields/bulk-delete', [FormFieldController::class, 'bulkDestroy'])->name('form-fields.bulk-destroy');
+        Route::delete('/form-fields/{formField}', [FormFieldController::class, 'destroy'])->name('form-fields.destroy');
+    });
 
     // Admin Routes
     Route::prefix('admin')->name('admin.')->group(function () {

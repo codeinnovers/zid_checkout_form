@@ -176,7 +176,7 @@
                             <vue-collapsible :isOpen="activeDropdown === 'checkout'">
                                 <ul class="sub-menu text-gray-500">
                                     <li>
-                                        <Link href="#" @click="toggleMobileMenu">{{ $t('checkout.fields') }}</Link>
+                                        <Link :href="route('merchant.form-fields.index')" @click="toggleMobileMenu">{{ $t('checkout.fields') }}</Link>
                                     </li>
                                 </ul>
                             </vue-collapsible>
