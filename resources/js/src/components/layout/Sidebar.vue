@@ -3,7 +3,7 @@
         <nav class="sidebar fixed min-h-screen h-full top-0 bottom-0 w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] z-50 transition-all duration-300">
             <div class="bg-white dark:bg-[#0e1726] h-full">
                 <div class="flex justify-between items-center px-4 py-3">
-                    <Link :href="route('dashboard')" class="main-logo flex items-center shrink-0">
+                    <Link :href="isAdmin ? route('admin.dashboard') : route('merchant.form-fields.index')" class="main-logo flex items-center shrink-0">
                         <img class="w-8 ml-[5px] flex-none" src="/assets/images/logo.svg" alt="" />
                         <span class="text-2xl ltr:ml-1.5 rtl:mr-1.5 font-semibold align-middle lg:inline dark:text-white-light">Starter</span>
                     </Link>
@@ -33,9 +33,9 @@
                     class="h-[calc(100vh-80px)] relative"
                 >
                     <ul class="relative font-semibold space-y-0.5 p-4 py-0">
-                        <!-- Dashboard -->
-                        <li class="nav-item">
-                            <Link :href="route('dashboard')" class="group" @click="toggleMobileMenu">
+                        <!-- Admin: Dashboard -->
+                        <li v-if="isAdmin" class="nav-item">
+                            <Link :href="route('admin.dashboard')" class="group" @click="toggleMobileMenu">
                                 <div class="flex items-center">
                                     <svg
                                         class="group-hover:!text-primary shrink-0"
@@ -46,27 +46,43 @@
                                         xmlns="http://www.w3.org/2000/svg"
                                     >
                                         <path
-                                            d="M24 5C24 6.65685 22.6569 8 21 8C19.3431 8 18 6.65685 18 5C18 3.34315 19.3431 2 21 2C22.6569 2 24 3.34315 24 5Z"
-                                            fill="currentColor"
-                                        />
-                                        <path
-                                            d="M17.2339 7.46394L15.6973 8.74444C14.671 9.59966 13.9585 10.1915 13.357 10.5784C12.7747 10.9529 12.3798 11.0786 12.0002 11.0786C11.6206 11.0786 11.2258 10.9529 10.6435 10.5784C10.0419 10.1915 9.32941 9.59966 8.30315 8.74444L5.92837 6.76546C5.57834 6.47377 5.05812 6.52106 4.76643 6.87109C4.47474 7.22112 4.52204 7.74133 4.87206 8.03302L7.28821 10.0465C8.2632 10.859 9.05344 11.5176 9.75091 11.9661C10.4775 12.4334 11.185 12.7286 12.0002 12.7286C12.8154 12.7286 13.523 12.4334 14.2495 11.9661C14.947 11.5176 15.7372 10.859 16.7122 10.0465L18.3785 8.65795C17.9274 8.33414 17.5388 7.92898 17.2339 7.46394Z"
-                                            fill="currentColor"
-                                        />
-                                        <path
-                                            d="M18.4538 6.58719C18.7362 6.53653 19.0372 6.63487 19.234 6.87109C19.3965 7.06614 19.4538 7.31403 19.4121 7.54579C19.0244 7.30344 18.696 6.97499 18.4538 6.58719Z"
-                                            fill="currentColor"
-                                        />
-                                        <path
                                             opacity="0.5"
-                                            d="M16.9576 3.02099C16.156 3 15.2437 3 14.2 3H9.8C5.65164 3 3.57746 3 2.28873 4.31802C1 5.63604 1 7.75736 1 12C1 16.2426 1 18.364 2.28873 19.682C3.57746 21 5.65164 21 9.8 21H14.2C18.3484 21 20.4225 21 21.7113 19.682C23 18.364 23 16.2426 23 12C23 10.9326 23 9.99953 22.9795 9.1797C22.3821 9.47943 21.7103 9.64773 21 9.64773C18.5147 9.64773 16.5 7.58722 16.5 5.04545C16.5 4.31904 16.6646 3.63193 16.9576 3.02099Z"
+                                            d="M2 12.2039C2 9.91549 2 8.77128 2.5192 7.82274C3.0384 6.87421 3.98695 6.28551 5.88403 5.10813L7.88403 3.86687C9.88939 2.62229 10.8921 2 12 2C13.1079 2 14.1106 2.62229 16.116 3.86687L18.116 5.10812C20.0131 6.28551 20.9616 6.87421 21.4808 7.82274C22 8.77128 22 9.91549 22 12.2039V13.725C22 17.6258 22 19.5763 20.8284 20.7881C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.7881C2 19.5763 2 17.6258 2 13.725V12.2039Z"
+                                            fill="currentColor"
+                                        />
+                                        <path
+                                            d="M9 17.25C8.58579 17.25 8.25 17.5858 8.25 18C8.25 18.4142 8.58579 18.75 9 18.75H15C15.4142 18.75 15.75 18.4142 15.75 18C15.75 17.5858 15.4142 17.25 15 17.25H9Z"
                                             fill="currentColor"
                                         />
                                     </svg>
+                                    <span class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{{ $t('dashboard') }}</span>
+                                </div>
+                            </Link>
+                        </li>
 
-                                    <span class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{{
-                                            $t('dashboard')
-                                        }}</span>
+                        <!-- Merchant: Dashboard -->
+                        <li v-if="isMerchant" class="nav-item">
+                            <Link :href="route('merchant.form-fields.index')" class="group" @click="toggleMobileMenu">
+                                <div class="flex items-center">
+                                    <svg
+                                        class="group-hover:!text-primary shrink-0"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            opacity="0.5"
+                                            d="M2 12.2039C2 9.91549 2 8.77128 2.5192 7.82274C3.0384 6.87421 3.98695 6.28551 5.88403 5.10813L7.88403 3.86687C9.88939 2.62229 10.8921 2 12 2C13.1079 2 14.1106 2.62229 16.116 3.86687L18.116 5.10812C20.0131 6.28551 20.9616 6.87421 21.4808 7.82274C22 8.77128 22 9.91549 22 12.2039V13.725C22 17.6258 22 19.5763 20.8284 20.7881C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.7881C2 19.5763 2 17.6258 2 13.725V12.2039Z"
+                                            fill="currentColor"
+                                        />
+                                        <path
+                                            d="M9 17.25C8.58579 17.25 8.25 17.5858 8.25 18C8.25 18.4142 8.58579 18.75 9 18.75H15C15.4142 18.75 15.75 18.4142 15.75 18C15.75 17.5858 15.4142 17.25 15 17.25H9Z"
+                                            fill="currentColor"
+                                        />
+                                    </svg>
+                                    <span class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{{ $t('dashboard') }}</span>
                                 </div>
                             </Link>
                         </li>
@@ -86,8 +102,8 @@
                             <span>{{ $t('apps') }}</span>
                         </h2>
 
-                        <!-- Users -->
-                        <li class="menu nav-item">
+                        <!-- Admin: Users -->
+                        <li v-if="isAdmin" class="menu nav-item">
                             <button
                                 type="button"
                                 class="nav-link group w-full"
@@ -129,8 +145,85 @@
                             </vue-collapsible>
                         </li>
 
-                        <!-- Checkout -->
-                        <li class="menu nav-item">
+                        <!-- Admin: Merchants -->
+                        <li v-if="isAdmin" class="menu nav-item">
+                            <button
+                                type="button"
+                                class="nav-link group w-full"
+                                :class="{ active: activeDropdown === 'merchants' }"
+                                @click="activeDropdown === 'merchants' ? (activeDropdown = null) : (activeDropdown = 'merchants')"
+                            >
+                                <div class="flex items-center">
+                                    <svg
+                                        class="group-hover:!text-primary shrink-0"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M6 2L3 6V20C3 21.1 3.9 22 5 22H19C20.1 22 21 21.1 21 20V6L18 2H6Z"
+                                            stroke="currentColor"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                        <path opacity="0.5" d="M3 6H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                                            stroke="currentColor"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                    <span class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                        {{ $t('merchants.title') }}
+                                    </span>
+                                </div>
+                                <div class="rtl:rotate-180" :class="{ '!rotate-90': activeDropdown === 'merchants' }">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                            </button>
+                            <vue-collapsible :isOpen="activeDropdown === 'merchants'">
+                                <ul class="sub-menu text-gray-500">
+                                    <li>
+                                        <Link :href="route('admin.merchants.index')" @click="toggleMobileMenu">{{ $t('merchants.list') }}</Link>
+                                    </li>
+                                </ul>
+                            </vue-collapsible>
+                        </li>
+
+                        <!-- Merchant: Order Data -->
+                        <li v-if="isMerchant" class="nav-item">
+                            <Link :href="route('merchant.orders.index')" class="group" @click="toggleMobileMenu">
+                                <div class="flex items-center">
+                                    <svg
+                                        class="group-hover:!text-primary shrink-0"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            opacity="0.5"
+                                            d="M3.27489 15.2957C2.42496 14.1915 2 13.6394 2 12C2 10.3606 2.42496 9.80853 3.27489 8.70433C4.97196 6.49956 7.81811 4 12 4C16.1819 4 19.028 6.49956 20.7251 8.70433C21.575 9.80853 22 10.3606 22 12C22 13.6394 21.575 14.1915 20.7251 15.2957C19.028 17.5004 16.1819 20 12 20C7.81811 20 4.97196 17.5004 3.27489 15.2957Z"
+                                            fill="currentColor"
+                                        />
+                                        <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" fill="currentColor" />
+                                    </svg>
+                                    <span class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{{ $t('orders.title') }}</span>
+                                </div>
+                            </Link>
+                        </li>
+
+                        <!-- Merchant: Checkout -->
+                        <li v-if="isMerchant" class="menu nav-item">
                             <button
                                 type="button"
                                 class="nav-link group w-full"
@@ -178,6 +271,9 @@
                                     <li>
                                         <Link :href="route('merchant.form-fields.index')" @click="toggleMobileMenu">{{ $t('checkout.fields') }}</Link>
                                     </li>
+                                    <li>
+                                        <Link :href="route('merchant.submissions.index')" @click="toggleMobileMenu">{{ $t('submissions.title') }}</Link>
+                                    </li>
                                 </ul>
                             </vue-collapsible>
                         </li>
@@ -189,15 +285,20 @@
 </template>
 
 <script lang="ts" setup>
-    import { ref, onMounted } from 'vue';
-    import { Link } from '@inertiajs/vue3';
+    import { ref, computed, onMounted } from 'vue';
+    import { Link, usePage } from '@inertiajs/vue3';
 
     import { useAppStore } from '@/stores/index';
     import VueCollapsible from 'vue-height-collapsible/vue3';
-    import {route} from "ziggy-js";
+    import { route } from 'ziggy-js';
+
     const store = useAppStore();
+    const page = usePage();
     const activeDropdown: any = ref('');
     const subActive: any = ref('');
+
+    const isAdmin = computed(() => (page.props.auth as any)?.user?.role === 'admin');
+    const isMerchant = computed(() => (page.props.auth as any)?.user?.role === 'merchant');
 
     onMounted(() => {
         const selector = document.querySelector('.sidebar ul a[href="' + window.location.pathname + '"]');

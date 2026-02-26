@@ -31,7 +31,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'csrf_token' => csrf_token(),
             'auth' => [
-                'user' => $request->user()?->only(['id', 'name', 'email']),
+                'user' => $request->user()?->only(['id', 'name', 'email', 'role']),
             ],
         ];
     }

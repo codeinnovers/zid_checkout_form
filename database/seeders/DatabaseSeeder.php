@@ -26,7 +26,12 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // Create sample users
-        User::factory()->count(25)->create();
+        // Create sample users (mix of admin and merchant roles)
+        User::factory()->admin()->count(3)->create();
+        User::factory()->merchant()->count(10)->create();
+        User::factory()->count(12)->create(); // random statuses/roles
+
+        // Create merchants with form fields and sample submissions
+        $this->call(ZidMerchantSeeder::class);
     }
 }

@@ -17,7 +17,6 @@ class FormFieldController extends Controller
     private function currentMerchant(): ZidMerchant
     {
         $merchant = auth()->user()->merchant;
-        return ZidMerchant::latest()->first();
         abort_if(! $merchant, 403, 'No merchant account linked to this user.');
 
         return $merchant;

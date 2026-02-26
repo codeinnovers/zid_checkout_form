@@ -46,8 +46,9 @@ class User extends Authenticatable
      */
     protected array $gridFilterable = [
         'status' => 'exact',
-        'name' => 'like',
-        'email' => 'like',
+        'role'   => 'exact',
+        'name'   => 'like',
+        'email'  => 'like',
     ];
 
     /**
@@ -60,6 +61,7 @@ class User extends Authenticatable
         'name',
         'email',
         'status',
+        'role',
         'created_at',
     ];
 
